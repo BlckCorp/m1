@@ -11,17 +11,10 @@
 
   <style>
     :root {
-      --bg: #FFF0F5;
-      --bg-hero: radial-gradient(circle at 50% 20%, #FFF5F7, #FFF0F5 60%, #FFE6EE);
-      --card: #FFFFFF;
-      --text: #2C2A28;
-      --text-light: #6B6B6B;
-      --accent: #DB7093;
-      --accent-hover: #C75B7A;
-      --shadow: 0 6px 24px rgba(219,112,147,0.15);
-      --radius: 16px;
-      --font-serif: 'Playfair Display', serif;
-      --font-body: 'Lora', serif;
+      --bg: #FFF0F5; --bg-hero: radial-gradient(circle at 50% 20%, #FFF5F7, #FFF0F5 60%, #FFE6EE);
+      --card: #FFFFFF; --text: #2C2A28; --text-light: #6B6B6B; --accent: #DB7093;
+      --accent-hover: #C75B7A; --shadow: 0 6px 24px rgba(219,112,147,0.15); --radius: 16px;
+      --font-serif: 'Playfair Display', serif; --font-body: 'Lora', serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -145,12 +138,10 @@
 
     <section id="rsvp">
       <h2>Подтвердите участие</h2>
-      <!-- ✅ Прямая отправка на почту заказчика -->
-      <form class="rsvp-form" action="https://formsubmit.co/tramivo@ya.ru" method="POST">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="💍 Новая заявка на свадьбу Ангелины и Андрея">
-        <input type="hidden" name="_template" value="table">
-        
+      <form class="rsvp-form" id="rsvpForm">
+        <!-- ⚠️ ВСТАВЬТЕ ССЫЛКУ ИЗ ШАГА 2 СЮДА -->
+        <input type="hidden" id="scriptUrl" value="https://script.google.com/macros/s/AKfycbxJOmVHFWWJRYbotTAoatDLV4fkVUf8c3U9mISIPIp4ruis4CGA7K5W5lOSAZZNctqHeQ/exec">
+
         <div class="form-group">
           <label class="form-label">Имя и Фамилия</label>
           <input type="text" class="form-input" name="name" placeholder="Иван Иванов" required>
@@ -222,14 +213,11 @@
   <footer><p>Ангелина & Андрей • 30.07.2026</p></footer>
 
   <script>
+    // Таймер
     const targetDate = new Date('2026-07-30T08:00:00').getTime();
     function updateCountdown() {
-      const now = new Date().getTime();
-      const diff = targetDate - now;
-      if (diff <= 0) {
-        document.getElementById('countdown').innerHTML = '<div style="font-size:1.6rem; color:var(--accent); font-weight:500; font-family:var(--font-serif);">День настал! 💍</div>';
-        return;
-      }
+      const now = new Date().getTime(); const diff = targetDate - now;
+      if (diff <= 0) { document.getElementById('countdown').innerHTML = '<div style="font-size:1.6rem; color:var(--accent); font-weight:500; font-family:var(--font-serif);">День настал! 💍</div>'; return; }
       document.getElementById('days').textContent = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
       document.getElementById('hours').textContent = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
       document.getElementById('minutes').textContent = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
@@ -237,26 +225,32 @@
     }
     setInterval(updateCountdown, 1000); updateCountdown();
 
+    // Анимация
     const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.15 });
     document.querySelectorAll('section').forEach(s => observer.observe(s));
 
-    const form = document.getElementById('rsvpForm');
-    const successMsg = document.getElementById('successMsg');
-    form.addEventListener('submit', function(e) {
+    // Отправка формы на Google Script
+    document.getElementById('rsvpForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const btn = this.querySelector('button');
+      const form = this;
+      const btn = form.querySelector('button');
+      const originalText = btn.textContent;
       btn.textContent = 'Отправка...'; btn.disabled = true;
-      const formData = new FormData(this);
-      const alcohol = Array.from(formData.getAll('alcohol[]'));
+
+      const formData = new FormData(form);
+      const alcohol = [];
+      document.querySelectorAll('input[name="alcohol[]"]:checked').forEach(cb => alcohol.push(cb.value));
       formData.set('alcohol', alcohol.join(', '));
 
-      fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } })
-        .then(response => {
-          if (response.ok) { form.reset(); successMsg.style.display = 'block'; }
-          else throw new Error();
+      const scriptUrl = document.getElementById('scriptUrl').value;
+
+      fetch(scriptUrl, { method: 'POST', body: formData, mode: 'no-cors' })
+        .then(() => {
+          form.reset();
+          document.getElementById('successMsg').style.display = 'block';
         })
-        .catch(() => alert('Ошибка отправки. Пожалуйста, свяжитесь с нами напрямую.'))
-        .finally(() => { btn.textContent = 'Отправить ответ'; btn.disabled = false; });
+        .catch(() => alert('Ошибка отправки. Попробуйте ещё раз или свяжитесь с нами напрямую.'))
+        .finally(() => { btn.textContent = originalText; btn.disabled = false; });
     });
   </script>
 </body>
