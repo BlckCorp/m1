@@ -3,88 +3,112 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Калькулятор замены розеток</title>
+  <title>Калькулятор электромонтажных работ</title>
+  <meta name="description" content="Универсальный калькулятор стоимости электромонтажных работ: розетки, выключатели, светильники, автоматы, кабель, диагностика и срочный выезд." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="page">
-    <section class="hero">
+    <section class="hero card-soft">
       <p class="eyebrow">Электромонтаж · быстрый расчёт</p>
-      <h1>Калькулятор стоимости замены розетки</h1>
+      <h1>Калькулятор стоимости работ электрика</h1>
       <p class="subtitle">
-        Ориентировочный расчёт цены: выезд, количество точек, материалы,
-        подрозетники, диагностика и срочность.
+        Считай не только розетки: добавляй выключатели, светильники, автоматы,
+        УЗО, диагностику, кабель, штробу, сборку коробок и срочный выезд.
       </p>
+      <div class="hero-badges" aria-label="Преимущества калькулятора">
+        <span>Для Авито</span>
+        <span>Для клиента</span>
+        <span>Для быстрого КП</span>
+      </div>
     </section>
 
-    <section class="calculator">
-      <form id="priceForm" class="card">
-        <label>
-          Количество розеток
-          <input type="number" id="points" min="1" value="1" />
-        </label>
+    <section class="layout">
+      <section class="card services-card" aria-labelledby="servicesTitle">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow small">Шаг 1</p>
+            <h2 id="servicesTitle">Выбери работы</h2>
+          </div>
+          <button class="ghost-btn" id="resetBtn" type="button">Сбросить</button>
+        </div>
 
-        <label>
-          Цена за замену одной розетки, ₽
-          <input type="number" id="pointPrice" min="0" value="1200" />
-        </label>
+        <div class="services-toolbar">
+          <button type="button" class="chip active" data-filter="all">Все</button>
+          <button type="button" class="chip" data-filter="points">Точки</button>
+          <button type="button" class="chip" data-filter="light">Свет</button>
+          <button type="button" class="chip" data-filter="panel">Щит</button>
+          <button type="button" class="chip" data-filter="cable">Кабель</button>
+          <button type="button" class="chip" data-filter="diagnostic">Диагностика</button>
+        </div>
 
-        <label>
-          Выезд мастера, ₽
-          <input type="number" id="visitPrice" min="0" value="800" />
-        </label>
+        <div id="servicesList" class="services-list"></div>
+      </section>
 
-        <label>
-          Материалы на одну точку, ₽
-          <input type="number" id="materials" min="0" value="450" />
-        </label>
+      <aside class="side">
+        <section class="card options-card" aria-labelledby="optionsTitle">
+          <p class="eyebrow small">Шаг 2</p>
+          <h2 id="optionsTitle">Настройки</h2>
 
-        <label>
-          Замена подрозетников
-          <select id="socketBoxes">
-            <option value="0">Не нужно</option>
-            <option value="500">Обычный подрозетник +500 ₽ / точка</option>
-            <option value="900">Сложный монтаж +900 ₽ / точка</option>
-          </select>
-        </label>
+          <label>
+            Выезд мастера, ₽
+            <input type="number" id="visitPrice" min="0" value="1000" />
+          </label>
 
-        <label>
-          Дополнительная диагностика
-          <select id="diagnostics">
-            <option value="0">Без диагностики</option>
-            <option value="700">Проверка линии +700 ₽</option>
-            <option value="1500">Проверка линии и щита +1500 ₽</option>
-          </select>
-        </label>
+          <label>
+            Минимальный заказ, ₽
+            <input type="number" id="minimumPrice" min="0" value="2000" />
+          </label>
 
-        <label>
-          Срочность
-          <select id="urgency">
-            <option value="1">Обычный выезд</option>
-            <option value="1.25">Сегодня +25%</option>
-            <option value="1.5">Срочно / вечер +50%</option>
-          </select>
-        </label>
-      </form>
+          <label>
+            Материалы сверху, ₽
+            <input type="number" id="materialsExtra" min="0" value="0" />
+          </label>
 
-      <aside class="result card">
-        <p>Итого ориентировочно</p>
-        <strong id="total">0 ₽</strong>
-        <span id="details"></span>
-        <button id="copyBtn" type="button">Скопировать расчёт</button>
+          <label>
+            Сложность объекта
+            <select id="complexity">
+              <option value="1">Обычная</option>
+              <option value="1.15">Старый фонд / неудобный доступ +15%</option>
+              <option value="1.25">Алюминий / слабые провода +25%</option>
+              <option value="1.4">Сложный объект +40%</option>
+            </select>
+          </label>
+
+          <label>
+            Срочность
+            <select id="urgency">
+              <option value="1">Обычный выезд</option>
+              <option value="1.25">Сегодня +25%</option>
+              <option value="1.5">Вечер / срочно +50%</option>
+              <option value="1.8">Аварийный вызов +80%</option>
+            </select>
+          </label>
+
+          <label>
+            Скидка, %
+            <input type="number" id="discount" min="0" max="50" value="0" />
+          </label>
+        </section>
+
+        <section class="card result" aria-live="polite">
+          <p>Итого ориентировочно</p>
+          <strong id="total">0 ₽</strong>
+          <span id="details">Выбери работы для расчёта.</span>
+          <button id="copyBtn" type="button">Скопировать расчёт</button>
+        </section>
       </aside>
     </section>
 
     <section class="notes card">
-      <h2>Что входит</h2>
+      <h2>Текст для клиента</h2>
       <p>
-        Демонтаж старой розетки, установка новой, проверка контактов,
-        фиксация механизма и базовая проверка работоспособности.
+        Расчёт предварительный. Точная цена согласовывается до начала работ после осмотра:
+        состояние проводки, материал стен, длина кабеля, доступ к щиту, качество контактов,
+        наличие заземления и необходимость расходников могут изменить итоговую сумму.
       </p>
-      <p>
-        Итоговая цена согласовывается до начала работ. Если после демонтажа
-        обнаружатся короткие провода, плохой подрозетник, нагрев или отсутствие
-        заземления — это считается отдельно.
+      <p class="note-strong">
+        Ничего не делается без согласования — сначала осмотр и цена, потом работа.
       </p>
     </section>
   </main>
