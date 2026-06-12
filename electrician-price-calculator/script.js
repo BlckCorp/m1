@@ -133,6 +133,105 @@ const services = [
     unit: 'точка',
     price: 800,
     description: 'Зачистка, подтяжка, восстановление соединения'
+  },
+  {
+    id: 'windowAdjust',
+    category: 'windows',
+    icon: '🪟',
+    title: 'Регулировка окна',
+    unit: 'створка',
+    price: 900,
+    description: 'Настройка прижима, устранение задевания, лёгкая регулировка фурнитуры'
+  },
+  {
+    id: 'windowHandle',
+    category: 'windows',
+    icon: '🚪',
+    title: 'Замена оконной ручки',
+    unit: 'шт.',
+    price: 600,
+    description: 'Демонтаж старой ручки и установка новой без стоимости ручки'
+  },
+  {
+    id: 'windowSeal',
+    category: 'windows',
+    icon: '〽️',
+    title: 'Замена уплотнителя',
+    unit: 'м',
+    price: 250,
+    description: 'Снятие старого уплотнителя, монтаж нового по периметру'
+  },
+  {
+    id: 'windowFoam',
+    category: 'windows',
+    icon: '🧴',
+    title: 'Пропенивание / герметизация',
+    unit: 'м',
+    price: 350,
+    description: 'Локальная герметизация щелей и продуваний без отделки откосов'
+  },
+  {
+    id: 'mosquitoNet',
+    category: 'windows',
+    icon: '🕸️',
+    title: 'Установка москитной сетки',
+    unit: 'шт.',
+    price: 700,
+    description: 'Монтаж готовой сетки на крепления без изготовления сетки'
+  },
+  {
+    id: 'furnitureSimple',
+    category: 'furniture',
+    icon: '🪑',
+    title: 'Сборка простой мебели',
+    unit: 'шт.',
+    price: 1200,
+    description: 'Стул, тумба, небольшой стол, простая полка'
+  },
+  {
+    id: 'furnitureBed',
+    category: 'furniture',
+    icon: '🛏️',
+    title: 'Сборка кровати',
+    unit: 'шт.',
+    price: 2500,
+    description: 'Каркас, ламели, подъёмный механизм считается сложностью'
+  },
+  {
+    id: 'furnitureWardrobe',
+    category: 'furniture',
+    icon: '🚪',
+    title: 'Сборка шкафа',
+    unit: 'секция',
+    price: 2200,
+    description: 'Корпусный шкаф, пенал, шкаф-купе по секциям'
+  },
+  {
+    id: 'furnitureKitchen',
+    category: 'furniture',
+    icon: '🍽️',
+    title: 'Сборка кухонного модуля',
+    unit: 'модуль',
+    price: 1800,
+    description: 'Нижний или верхний модуль без сложной врезки техники'
+  },
+  {
+    id: 'furnitureWallMount',
+    category: 'furniture',
+    icon: '🧱',
+    title: 'Навеска полки / шкафа',
+    unit: 'шт.',
+    price: 1000,
+    description: 'Разметка, крепёж, навеска на стену без цены крепежа'
+  },
+  {
+    id: 'furnitureDisassemble',
+    category: 'furniture',
+    icon: '🔩',
+    title: 'Разборка мебели',
+    unit: 'шт.',
+    price: 900,
+    description: 'Аккуратная разборка для ремонта, перевозки или утилизации'
   }
 ];
 
@@ -288,7 +387,7 @@ function copyResult() {
   }
 
   const text = [
-    'Предварительный расчёт электромонтажных работ',
+    'Предварительный расчёт бытовых работ',
     '',
     ...result.details,
     '',
