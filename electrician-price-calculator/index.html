@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Калькулятор замены розеток</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Электромонтаж · быстрый расчёт</p>
+      <h1>Калькулятор стоимости замены розетки</h1>
+      <p class="subtitle">
+        Ориентировочный расчёт цены: выезд, количество точек, материалы,
+        подрозетники, диагностика и срочность.
+      </p>
+    </section>
+
+    <section class="calculator">
+      <form id="priceForm" class="card">
+        <label>
+          Количество розеток
+          <input type="number" id="points" min="1" value="1" />
+        </label>
+
+        <label>
+          Цена за замену одной розетки, ₽
+          <input type="number" id="pointPrice" min="0" value="1200" />
+        </label>
+
+        <label>
+          Выезд мастера, ₽
+          <input type="number" id="visitPrice" min="0" value="800" />
+        </label>
+
+        <label>
+          Материалы на одну точку, ₽
+          <input type="number" id="materials" min="0" value="450" />
+        </label>
+
+        <label>
+          Замена подрозетников
+          <select id="socketBoxes">
+            <option value="0">Не нужно</option>
+            <option value="500">Обычный подрозетник +500 ₽ / точка</option>
+            <option value="900">Сложный монтаж +900 ₽ / точка</option>
+          </select>
+        </label>
+
+        <label>
+          Дополнительная диагностика
+          <select id="diagnostics">
+            <option value="0">Без диагностики</option>
+            <option value="700">Проверка линии +700 ₽</option>
+            <option value="1500">Проверка линии и щита +1500 ₽</option>
+          </select>
+        </label>
+
+        <label>
+          Срочность
+          <select id="urgency">
+            <option value="1">Обычный выезд</option>
+            <option value="1.25">Сегодня +25%</option>
+            <option value="1.5">Срочно / вечер +50%</option>
+          </select>
+        </label>
+      </form>
+
+      <aside class="result card">
+        <p>Итого ориентировочно</p>
+        <strong id="total">0 ₽</strong>
+        <span id="details"></span>
+        <button id="copyBtn" type="button">Скопировать расчёт</button>
+      </aside>
+    </section>
+
+    <section class="notes card">
+      <h2>Что входит</h2>
+      <p>
+        Демонтаж старой розетки, установка новой, проверка контактов,
+        фиксация механизма и базовая проверка работоспособности.
+      </p>
+      <p>
+        Итоговая цена согласовывается до начала работ. Если после демонтажа
+        обнаружатся короткие провода, плохой подрозетник, нагрев или отсутствие
+        заземления — это считается отдельно.
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
